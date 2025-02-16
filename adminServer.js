@@ -51,15 +51,15 @@ app.get('/main', (req, res) => {
   res.render('admin_main');
 });
 
-app.get('/admin_crud', adminAuth, (req, res) => {
+app.get('/admin_crud', (req, res) => {
   res.render('admin_crud');
 });
 
-app.get('/admin_list', adminAuth, (req, res) => {
+app.get('/admin_list', (req, res) => {
   res.render('admin_list');
 });
 
-app.get('/admin_statistics', adminAuth, (req, res) => {
+app.get('/admin_statistics', (req, res) => {
   res.render('admin_statistics');
 });
 //로그아웃 후 로그인 페이지로 redirection
