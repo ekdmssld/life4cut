@@ -52,18 +52,13 @@ document.addEventListener('DOMContentLoaded', function () {
       const email = emailInput.value.trim();
       const code = codeInput.value.trim();
 
-      console.log(
-        `📤 [CLIENT] 인증 코드 확인 요청: email=${email}, code=${code}`
-      );
+      console.log(`인증 코드 확인 요청: email=${email}, code=${code}`);
 
       const response = await fetch('/signup/email/verify', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, code }),
       });
-
-      const result = await response.json();
-      console.log(`📥 [CLIENT] 서버 응답:`, result);
 
       if (response.ok) {
         alert('이메일 인증 완료');
@@ -103,9 +98,6 @@ document.addEventListener('DOMContentLoaded', function () {
           phoneNumber,
         }),
       });
-
-      const result = await response.json();
-      console.log(`📥 [CLIENT] 서버 응답:`, result);
 
       if (response.ok) {
         alert('관리자가 승인 중입니다.!');

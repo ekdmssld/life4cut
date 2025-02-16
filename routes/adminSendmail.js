@@ -35,7 +35,7 @@ router.post('/register/sendmail', async (req, res) => {
       message: '승인 요청이 완료되었습니다. 관리자의 승인을 기다려주세요',
     });
   } catch (error) {
-    console.error(`❌ [SERVER] 이메일 전송 오류 : ${error.message}`);
+    console.error(`[SERVER] 이메일 전송 오류 : ${error.message}`);
     res
       .status(500)
       .json({ message: '이메일 전송 중 오류', error: error.message });
