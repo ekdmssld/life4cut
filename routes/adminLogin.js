@@ -35,6 +35,8 @@ router.post('/', async (req, res) => {
     const token = jwt.sign({ id: admin._id, email: admin.email }, JWT_KEY, {
       expiresIn: '1h',
     });
+    //쿠키 저장 방식 추가 기능
+    res.cookie('token', token, { httpOnly: true, maxAge: 3600000 });
 
     res.status(200).json({ message: '로그인 성공!', token });
   } catch (error) {

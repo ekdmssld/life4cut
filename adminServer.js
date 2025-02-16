@@ -47,7 +47,7 @@ app.get('/profile', adminAuth, (req, res) => {
   res.json({ message: '프로필 메시지', admin: req.admin });
 });
 // 라우트 설정
-app.get('/main', adminAuth, (req, res) => {
+app.get('/main', (req, res) => {
   res.render('admin_main');
 });
 

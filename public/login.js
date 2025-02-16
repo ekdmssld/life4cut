@@ -20,18 +20,22 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         const result = await response.json();
-        console.log(`서버 응답`, result);
+        console.log(`✅ 서버 응답`, result);
 
         if (response.ok) {
           alert('로그인 성공!');
-          localStorage.setItem('token', result.token);
 
-          getProfile();
+          // ✅ JWT 토큰 저장
+          localStorage.setItem('token', result.token);
+          console.log('✅ JWT 토큰 저장 완료:', result.token);
+
+          // ✅ /main으로 이동 (이후 /profile을 통해 인증 확인)
+          window.location.href = '/main';
         } else {
-          alert('로그인 실패: ' + result.message);
+          alert('❌ 로그인 실패: ' + result.message);
         }
       } catch (error) {
-        console.error('로그인 요청중 오류 발생');
+        console.error('❌ 로그인 요청 중 오류 발생:', error);
       }
     });
   }
@@ -42,6 +46,7 @@ async function getProfile() {
   const token = localStorage.getItem('token');
   if (!token) {
     console.error('토큰이 없습니다. 로그인 필요');
+    window.location.href = '/login';
     return;
   }
 
@@ -55,6 +60,7 @@ async function getProfile() {
     console.log('사용자 프로필:', userProfile);
 
     if (response.ok) {
+      alert(`welcome to ${userrProfile.username}`);
       window.location.href = '/main'; // 인증된 사용자만 접근 가능
     } else {
       alert('프로필을 불러올 수 없습니다.');
