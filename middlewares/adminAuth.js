@@ -4,7 +4,8 @@ const JWT_KEY = process.env.JWT_KEY;
 
 const adminAuth = (req, res, next) => {
   const token = req.headers.authorization;
-  if (!token) {
+
+  if (!token || !token.startWith('Bearer ')) {
     return res.status(401).json({ message: '인증 토큰 없음' });
   }
   try {

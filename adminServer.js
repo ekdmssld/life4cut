@@ -47,19 +47,19 @@ app.get('/profile', adminAuth, (req, res) => {
   res.json({ message: '프로필 메시지', admin: req.admin });
 });
 // 라우트 설정
-app.get('/main', (req, res) => {
+app.get('/main', adminAuth, (req, res) => {
   res.render('admin_main');
 });
 
-app.get('/admin_crud', (req, res) => {
+app.get('/admin_crud', adminAuth, (req, res) => {
   res.render('admin_crud');
 });
 
-app.get('/admin_list', (req, res) => {
+app.get('/admin_list', adminAuth, (req, res) => {
   res.render('admin_list');
 });
 
-app.get('/admin_statistics', (req, res) => {
+app.get('/admin_statistics', adminAuth, (req, res) => {
   res.render('admin_statistics');
 });
 //로그아웃 후 로그인 페이지로 redirection

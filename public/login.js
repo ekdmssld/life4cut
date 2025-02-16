@@ -63,5 +63,7 @@ async function getProfile() {
     }
   } catch (error) {
     console.error('프로필 요청 중 오류 발생:', error);
+    localStorage.removeItem('token');
+    window.location.href = '/login';
   }
 }
