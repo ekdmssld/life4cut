@@ -14,6 +14,6 @@ router.post('/signup/email', sendVerification);
 //이메일 인증 코드 검증 요청
 router.post('/signup/email/verify', verifyEmailCode);
 //관리자 회원가입
-router.post('/register', registerAdmin);
+router.post('/admin', registerAdmin);
 
 module.exports = router;

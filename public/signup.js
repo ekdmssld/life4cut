@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
       const email = document.getElementById('email').value;
 
-      const response = await fetch('/signup/email', {
+      const response = await fetch('/admin/email', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email }),
@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
       console.log(`인증 코드 확인 요청: email=${email}, code=${code}`);
 
-      const response = await fetch('/signup/email/verify', {
+      const response = await fetch('/admin/email/verify', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, code }),
@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function () {
         `📤 [CLIENT] 회원가입 요청: account=${account}, username=${username}, email=${email}`
       );
 
-      const response = await fetch('/signup/register', {
+      const response = await fetch('/signup/admin', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -101,7 +101,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
       if (response.ok) {
         alert('관리자가 승인 중입니다.!');
-        window.location.href = '/logout';
+        window.location.href = '/login';
       } else {
         alert('회원가입 실패: ' + result.message);
       }

@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
           //관리자 승인 요청 메일 전송
           try {
-            const mailResponse = await fetch('/register/sendmail', {
+            const mailResponse = await fetch('/admin/sendmail', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ email, username, account }),

@@ -7,7 +7,7 @@ const adminAuth = require('../middlewares/adminAuth');
 
 const JWT_KEY = process.env.JWT_KEY;
 
-router.post('/login', async (req, res) => {
+router.post('/', async (req, res) => {
   try {
     let { account, email, password } = req.body;
 
@@ -36,7 +36,7 @@ router.post('/login', async (req, res) => {
       expiresIn: '1h',
     });
 
-    res.status(200).json({ message: '로그인 성공!' });
+    res.status(200).json({ message: '로그인 성공!', token });
   } catch (error) {
     console.error(`로그인 오류: ${error.message}`);
     res.status(500).json({ message: '서버 오류 발생', error: error.message });

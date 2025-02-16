@@ -4,7 +4,7 @@ const express = require('express');
 const router = express.Router();
 const smtpTransport = require('../config/mailer');
 
-router.post('/register/sendmail', async (req, res) => {
+router.post('/admin/sendmail', async (req, res) => {
   try {
     const adminEmail = process.env.ADMIN_EMAIL;
     const { email, username, account } = req.body;
@@ -23,7 +23,7 @@ router.post('/register/sendmail', async (req, res) => {
              <p>Account ID: ${account}</p>
              <p>이름: ${username}</p>
              <p>이메일: ${email}</p>
-             <a href="http://localhost:8081/register/approve?email=${email}">승인하기</a>`,
+             <a href="http://localhost:8081/admin/approve?email=${email}">승인하기</a>`,
     };
 
     console.log('[SERVER] 이메일 전송 시도 중...');
