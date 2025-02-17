@@ -1,3 +1,4 @@
+//회원가입 양식 관련 미들웨어
 const user = require('../models/admin');
 
 const validateSignup = async (req, res, next) => {

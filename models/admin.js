@@ -1,3 +1,4 @@
+//관리자 계정 모델 - 관리자 로그인, 가입
 const mongoose = require('mongoose');
 
 const AdminSchema = new mongoose.Schema({

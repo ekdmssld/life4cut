@@ -1,3 +1,4 @@
+//관리자 로그인 라우트 /login
 const express = require('express');
 const bcrypt = require('bcrypt');
 const Admin = require('../models/admin');
@@ -17,26 +18,22 @@ router.post('/', async (req, res) => {
     const admin = await Admin.findOne({ account, email });
 
     if (!admin) {
-      console.log(`계정을 찾을 수 없음: account=${account}, email=${email}`);
       return res.status(401).json({ message: '계정을 찾을 수 없습니다.' });
     }
 
     if (!admin.approved) {
-      console.log(`관리자 승인 필요: account=${account}`);
       return res.status(403).json({ message: '관리자 승인이 필요합니다.' });
     }
+
     const isMatch = await bcrypt.compare(password, admin.password);
     if (!isMatch) {
-      console.log(`비밀번호 불일치: account=${account}`);
       return res.status(401).json({ message: '비밀번호가 올바르지 않습니다.' });
     }
 
-    //JWT토큰 발급
+    // JWT 발급
     const token = jwt.sign({ id: admin._id, email: admin.email }, JWT_KEY, {
       expiresIn: '1h',
     });
-    //쿠키 저장 방식 추가 기능
-    res.cookie('token', token, { httpOnly: true, maxAge: 3600000 });
 
     res.status(200).json({ message: '로그인 성공!', token });
   } catch (error) {
@@ -45,7 +42,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-// 관리자 프로필 조회 (로그인 필요)
+// ✅ 보호된 프로필 조회
 router.get('/profile', adminAuth, async (req, res) => {
   try {
     const admin = await Admin.findById(req.admin.id).select('-password');

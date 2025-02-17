@@ -1,3 +1,4 @@
+//로그인 페이지
 document.addEventListener('DOMContentLoaded', function () {
   const loginForm = document.getElementById('loginForm');
 
@@ -13,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
       const email = `${emailUser}@${emailDomain}`.toLowerCase();
 
       try {
-        const response = await fetch('/login', {
+        const response = await fetch('/auth/login', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ account, email, password }),
@@ -27,10 +28,9 @@ document.addEventListener('DOMContentLoaded', function () {
           // JWT 토큰 저장
           localStorage.setItem('token', result.token);
 
-          ///main으로 이동 (이후 /profile을 통해 인증 확인)
-          window.location.href = '/main';
+          await verfiyAndRedirection();
         } else {
-          alert('로그인 실패: ' + message);
+          alert('로그인 실패: ' + result.message);
         }
       } catch (error) {
         console.error('로그인 요청 중 오류 발생:', error);
@@ -39,11 +39,12 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 });
 
-// 프로필 가져오기 (로그인 후 실행)
-async function getProfile() {
+// JWT 인증 확인 후 페이지 이동
+async function verfiyAndRedirection() {
   const token = localStorage.getItem('token');
+
   if (!token) {
-    console.error('토큰이 없습니다. 로그인 필요');
+    console.log('JWT 없음 로그인 필요');
     window.location.href = '/login';
     return;
   }
@@ -51,23 +52,36 @@ async function getProfile() {
   try {
     const response = await fetch('/profile', {
       method: 'GET',
-      headers: { Authorization: `Bearer ${token}` },
+      headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
     });
-
-    const userProfile = await response.json();
-    console.log('사용자 프로필:', userProfile);
-
     if (response.ok) {
-      alert(`welcome to ${userProfile.username}`);
-      window.location.href = '/main'; // 인증된 사용자만 접근 가능
+      console.log('인증 성공, 메인 페이지 이동');
+      window.location.href = '/main';
     } else {
-      alert('프로필을 불러올 수 없습니다.');
-      localStorage.removeItem('token'); // 토큰 삭제 후 로그인 페이지로 이동
+      console.error('인증 실패, 재로그인 필요');
+      localStorage.removeItem('token');
       window.location.href = '/login';
     }
   } catch (error) {
-    console.error('프로필 요청 중 오류 발생:', error);
+    console.error('이동 중 오류 발생', error);
     localStorage.removeItem('token');
     window.location.href = '/login';
   }
+}
+
+function logout() {
+  fetch('/auth/logout', {
+    method: 'POST',
+  })
+    .then((response) => {
+      if (response.ok) {
+        localStorage.removeItem('token');
+        window.location.href = '/login';
+      } else {
+        alert('로그아웃 실패');
+      }
+    })
+    .catch((error) => {
+      console.error('로그아웃 중 오류 발생', error);
+    });
 }

@@ -1,3 +1,4 @@
+//회원가입 이메일 전송 미들웨어
 const Admin = require('../models/admin');
 const bcrypt = require('bcrypt');
 const smtpTransport = require('../config/mailer');

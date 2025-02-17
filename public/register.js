@@ -1,3 +1,4 @@
+//회원가입 관련
 document.addEventListener('DOMContentLoaded', function () {
   const emailForm = document.getElementById('emailForm');
   const verifyForm = document.getElementById('verifyForm');

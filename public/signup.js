@@ -1,3 +1,4 @@
+//회원가입 프로세스 관련
 document.addEventListener('DOMContentLoaded', function () {
   const savedEmail = localStorage.getItem('verifiedEmail');
   const emailInput = document.getElementById('email');

@@ -3,11 +3,12 @@ require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
 
+const authRoutes = require('./routes/auth');
 const adminRegister = require('./routes/adminRegister');
 const adminApprove = require('./routes/adminApprove');
 const orderRoutes = require('./routes/adminOrderRoutes');
-const loginRoutes = require('./routes/adminLogin');
 const postRoutes = require('./routes/postRoutes');
 const adminSendmail = require('./routes/adminSendmail');
 const {
@@ -24,16 +25,17 @@ dbConnect();
 
 app.use(express.json());
 app.use(cors());
+app.use(cookieParser());
 
 //게시글 관련 라우터
 app.use('/orders', orderRoutes);
 app.use('/posts', postRoutes);
 
 //로그인 관련 라우터
+app.use('/auth', authRoutes);
 app.use('/signup', adminRegister); //회원가입
 app.use('/admin', adminApprove);
 app.use('/admin/sendMail', adminSendmail);
-app.use('/login', loginRoutes); //로그인
 
 // EJS 설정
 app.set('view engine', 'ejs');
@@ -48,19 +50,20 @@ app.get('/profile', adminAuth, (req, res) => {
 });
 // 라우트 설정
 app.get('/main', (req, res) => {
-  res.render('admin_main', { token: null });
+  console.log('✅ /main 요청 - 인증된 사용자:', req.admin);
+  res.render('admin_main');
 });
 
 app.get('/admin_crud', (req, res) => {
-  res.render('admin_crud', { token: null });
+  res.render('admin_crud');
 });
 
 app.get('/admin_list', (req, res) => {
-  res.render('admin_list', { token: null });
+  res.render('admin_list');
 });
 
 app.get('/admin_statistics', (req, res) => {
-  res.render('admin_statistics', { token: null });
+  res.render('admin_statistics');
 });
 //로그아웃 후 로그인 페이지로 redirection
 app.get('/login', (req, res) => {

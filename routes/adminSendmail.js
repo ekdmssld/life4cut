@@ -1,4 +1,4 @@
-//관리자 승인 요청 이메일 전송
+//관리자 이메일 전송 라우트
 require('dotenv').config();
 const express = require('express');
 const router = express.Router();

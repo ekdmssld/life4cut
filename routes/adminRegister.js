@@ -1,3 +1,4 @@
+//관리자 회원가입 라우트
 const express = require('express');
 const { registerAdmin } = require('../middlewares/registerMail');
 const {

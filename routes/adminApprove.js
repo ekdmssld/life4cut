@@ -1,4 +1,4 @@
-//관리자 승인 관련 라우터
+//관리자 승인 관련 라우터 - /admin/approve
 const express = require('express');
 const Admin = require('../models/admin');
 const smtpTransport = require('../config/mailer');

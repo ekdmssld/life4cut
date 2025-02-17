@@ -1,3 +1,4 @@
+//이메일 인증 미들웨어 - 이메일 인증 코드 사용
 const smtpTransport = require('../config/mailer');
 
 const verificationCodes = new Map();
@@ -7,11 +8,10 @@ const sendVerification = async (req, res) => {
     const { email } = req.body;
     const code = Math.floor(100000 + Math.random() * 900000).toString();
 
-    console.log(`✅ [SERVER] 생성된 인증 코드: ${code} (이메일: ${email})`);
+    console.log(`생성된 인증 코드: ${code}`);
 
     verificationCodes.set(email, code);
     setTimeout(() => {
-      console.log(`🕒 [SERVER] 인증 코드 만료 (이메일: ${email})`);
       verificationCodes.delete(email);
     }, 5 * 60 * 1000);
 
