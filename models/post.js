@@ -1,10 +1,9 @@
 const mongoose = require('mongoose');
 
 const postSchema = new mongoose.Schema({
-  title: { type: String, required: true },
-  content: { type: String, required: true },
-  imageURL: { type: String, required: false },
-  createdAt: { type: Date, default: Date.now },
-});
+    title: { type: String, required: true },
+    content: { type: String, required: true },
+    attachments : { type: [String], required: false }
+}, { timestamps: true }); // ✅ timestamps 추가
 
-module.exports = mongoose.model('post', postSchema);
+module.exports = mongoose.model('Post', postSchema);

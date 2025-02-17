@@ -1,35 +1,38 @@
-require('dotenv').config();
-
+require('dotenv').config(); // 환경 변수 로드
 const express = require('express');
-const path = require('path');
-const cors = require('cors');
 const cookieParser = require('cookie-parser');
-
+const path = require('path');
+const cors = require('cors'); // CORS 에러 방지를 위해 추가
+const dbConnect = require('./config/dbConnect'); // 데이터베이스 연결 함수 불러오기
+const orderRoutes = require('./routes/adminOrderRoutes'); // 주문 관련 라우트 추가
+const postRoutes = require('./routes/postRoutes'); //게시글 관련 라우트 추가
 const authRoutes = require('./routes/auth');
 const adminRegister = require('./routes/adminRegister');
 const adminApprove = require('./routes/adminApprove');
-const orderRoutes = require('./routes/adminOrderRoutes');
-const postRoutes = require('./routes/postRoutes');
 const adminSendmail = require('./routes/adminSendmail');
 const {
   sendVerification,
   verifyEmailCode,
 } = require('./middlewares/emailAuth');
 const adminAuth = require('./middlewares/adminAuth');
-const dbConnect = require('./config/dbConnect');
 
 const app = express();
 const PORT = process.env.PORT || 8081;
 
-dbConnect();
+dbConnect(); // MongoDB 연결
 
-app.use(express.json());
-app.use(cors());
+// EJS 설정
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(cors()); // 프론트엔드와 통신할 때 필요한 경우 추가
+
+
+app.use(express.json()); // JSON 요청을 처리하는 미들웨어
+app.use(express.urlencoded({ extended: true })); // 폼 데이터 파싱
 app.use(cookieParser());
 
-//게시글 관련 라우터
-app.use('/orders', orderRoutes);
-app.use('/posts', postRoutes);
 
 //로그인 관련 라우터
 app.use('/auth', authRoutes);
@@ -37,18 +40,12 @@ app.use('/signup', adminRegister); //회원가입
 app.use('/admin', adminApprove);
 app.use('/admin/sendMail', adminSendmail);
 
-// EJS 설정
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
-
-// 정적 파일 제공
-app.use(express.static(path.join(__dirname, 'public')));
-
 //보호된 경로
 app.get('/profile', adminAuth, (req, res) => {
   res.json({ message: '프로필 메시지', admin: req.admin });
 });
-// 라우트 설정
+
+
 app.get('/main', (req, res) => {
   console.log('✅ /main 요청 - 인증된 사용자:', req.admin);
   res.render('admin_main');
@@ -65,21 +62,28 @@ app.get('/admin_list', (req, res) => {
 app.get('/admin_statistics', (req, res) => {
   res.render('admin_statistics');
 });
-//로그아웃 후 로그인 페이지로 redirection
-app.get('/login', (req, res) => {
+
+app.get('/login', (req, res) => {//로그아웃 후 로그인 페이지로 redirection
   res.render('admin_login');
 });
-//회원가입 관련 페이지
-app.get('/register', (req, res) => {
+
+app.get('/register', (req, res) => {//회원가입 관련 페이지
   res.render('admin_register');
 });
 
 app.get('/verify-email', (req, res) => {
   res.render('admin_verifyemail');
 });
-//이메일 인증 API
-app.post('/signup/email', sendVerification);
+
+app.post('/signup/email', sendVerification);//이메일 인증 API
 app.post('/signup/email/verify', verifyEmailCode);
+
+// **📌 주문 관련 라우트 (routes/orderRoutes.js에서 관리)**
+//app.use(orderRoutes); // routes/orderRoutes.js의 API 라우트 불러오기
+
+// **📌 게시글 관련 라우트 (routes/postRoutes.js에서 관리)**
+app.use(postRoutes); // routes/postRoutes.js의 API 라우트 불러오기
+app.use(orderRoutes); // routes/orderRoutes.js의 API 라우트 불러오기
 
 // 서버 실행
 app.listen(PORT, () => {
