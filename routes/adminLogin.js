@@ -1,6 +1,6 @@
 //관리자 로그인 라우트 /login
 const express = require('express');
-const bcrypt = require('bcrypt');
+const bcrypt = require("bcryptjs");
 const Admin = require('../models/admin');
 const jwt = require('jsonwebtoken');
 const router = express.Router();

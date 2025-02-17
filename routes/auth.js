@@ -1,6 +1,6 @@
 // 사용자 및 관리자 로그인 라우터
 const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
+const bcrypt = require("bcryptjs");
 const express = require('express');
 const Admin = require('../models/admin');
 
