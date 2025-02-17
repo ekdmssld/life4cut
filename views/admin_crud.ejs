@@ -16,6 +16,14 @@
     />
     <!-- Custom CSS -->
     <link href="/css/style.css" rel="stylesheet" />
+    <script>
+      const token = localStorage.getItem('token');
+      if (!token) {
+        alert('로그인 정보가 만료되었습니다. 다시 로그인해주세요.');
+        window.location.href = '/login';
+        return;
+      }
+    </script>
   </head>
   <body>
     <!-- 상단 네비게이션 바 -->
@@ -164,13 +172,10 @@
         const token = localStorage.getItem('token');
 
         if (!token) {
-          console.error('❌ 저장된 JWT 토큰 없음, 로그인 필요');
-          alert('❌ 로그인 정보가 만료되었습니다. 다시 로그인해주세요.');
+          alert('로그인 정보가 만료되었습니다. 다시 로그인해주세요.');
           window.location.href = '/login';
           return;
         }
-
-        console.log('🔹 저장된 JWT 토큰:', token);
 
         try {
           const response = await fetch('/profile', {
@@ -178,16 +183,13 @@
             headers: { Authorization: `Bearer ${token}` },
           });
 
-          const userProfile = await response.json();
-          console.log('✅ 사용자 프로필:', userProfile);
-
           if (!response.ok) {
-            alert('❌ 인증 실패: 다시 로그인해주세요.');
+            alert('인증 실패: 다시 로그인해주세요.');
             localStorage.removeItem('token');
             window.location.href = '/login';
           }
         } catch (error) {
-          console.error('❌ 프로필 요청 중 오류 발생:', error);
+          console.error('프로필 요청 중 오류 발생:', error);
           localStorage.removeItem('token');
           window.location.href = '/login';
         }

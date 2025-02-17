@@ -16,7 +16,36 @@
     />
     <!-- Custom CSS -->
     <link href="/css/style.css" rel="stylesheet" />
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const token = localStorage.getItem('token');
+
+        if (!token) {
+          alert('로그인 정보가 만료되었습니다. 다시 로그인해주세요.');
+          window.location.href = '/login';
+          return;
+        }
+
+        fetch('/profile', {
+          method: 'GET',
+          headers: { Authorization: `Bearer ${token}` },
+        })
+          .then((response) => {
+            if (!response.ok) {
+              alert('인증 실패: 다시 로그인해주세요.');
+              localStorage.removeItem('token');
+              window.location.href = '/login';
+            }
+          })
+          .catch((error) => {
+            console.error('프로필 요청 중 오류 발생:', error);
+            localStorage.removeItem('token');
+            window.location.href = '/login';
+          });
+      });
+    </script>
   </head>
+
   <body>
     <!-- 상단 네비게이션 바 -->
     <nav class="navbar navbar-light bg-light px-3">
@@ -48,18 +77,12 @@
         </button>
 
         <!-- 로그아웃 버튼 (큰 화면에서만 표시) -->
-        <button
-          class="btn btn-danger d-none d-lg-block"
-          onclick="location.href='/login'"
-        >
+        <button class="btn btn-danger d-none d-lg-block" onclick="logout()">
           로그아웃
         </button>
 
         <!-- 로그아웃 아이콘 (작은 화면에서만 표시) -->
-        <button
-          class="btn btn-danger d-lg-none"
-          onclick="location.href='/login'"
-        >
+        <button class="btn btn-danger d-lg-none" onclick="logout()">
           <i class="bi bi-box-arrow-right text-white"></i>
         </button>
       </div>
@@ -199,38 +222,10 @@
       rel="stylesheet"
     />
     <script>
-      document.addEventListener('DOMContentLoaded', async function () {
-        const token = localStorage.getItem('token');
-
-        if (!token) {
-          console.error('❌ 저장된 JWT 토큰 없음, 로그인 필요');
-          alert('❌ 로그인 정보가 만료되었습니다. 다시 로그인해주세요.');
-          window.location.href = '/login';
-          return;
-        }
-
-        console.log('🔹 저장된 JWT 토큰:', token);
-
-        try {
-          const response = await fetch('/profile', {
-            method: 'GET',
-            headers: { Authorization: `Bearer ${token}` },
-          });
-
-          const userProfile = await response.json();
-          console.log('✅ 사용자 프로필:', userProfile);
-
-          if (!response.ok) {
-            alert('❌ 인증 실패: 다시 로그인해주세요.');
-            localStorage.removeItem('token');
-            window.location.href = '/login';
-          }
-        } catch (error) {
-          console.error('❌ 프로필 요청 중 오류 발생:', error);
-          localStorage.removeItem('token');
-          window.location.href = '/login';
-        }
-      });
+      function logout() {
+        localStorage.removeItem('token');
+        window.location.href = '/login';
+      }
     </script>
   </body>
 </html>

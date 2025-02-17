@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function () {
       const codeInput = document.getElementById('verificationCode');
 
       if (!emailInput || !codeInput) {
-        console.error('❌ [CLIENT] 입력 필드가 존재하지 않습니다.');
+        console.error('입력 필드가 존재하지 않습니다.');
         alert('이메일 또는 인증 코드 입력 필드가 없습니다.');
         return;
       }
@@ -82,10 +82,6 @@ document.addEventListener('DOMContentLoaded', function () {
       const email = document.getElementById('email').value;
       const password = document.getElementById('password').value;
       const phoneNumber = document.getElementById('phoneNumber').value;
-
-      console.log(
-        `📤 [CLIENT] 회원가입 요청: account=${account}, username=${username}, email=${email}`
-      );
 
       const response = await fetch('/signup/admin', {
         method: 'POST',

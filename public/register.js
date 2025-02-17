@@ -38,7 +38,6 @@ document.addEventListener('DOMContentLoaded', function () {
       });
 
       const result = await response.json();
-      console.log(`📥 [CLIENT] 서버 응답:`, result);
 
       if (response.ok) {
         alert('이메일 인증 완료');
@@ -63,10 +62,6 @@ document.addEventListener('DOMContentLoaded', function () {
       const password = document.getElementById('password').value;
       const phoneNumber = document.getElementById('phoneNumber').value;
 
-      console.log(
-        `📤 [CLIENT] 회원가입 요청: account=${account}, username=${username}, email=${email}`
-      );
-
       try {
         //회원가입 요청
         const response = await fetch('/register', {
@@ -81,9 +76,6 @@ document.addEventListener('DOMContentLoaded', function () {
           }),
         });
 
-        const result = await response.json();
-        console.log(`📥 [CLIENT] 서버 응답:`, result);
-
         if (response.ok) {
           alert('관리자가 승인하면 로그인할 수 있습니다.');
 
@@ -96,7 +88,7 @@ document.addEventListener('DOMContentLoaded', function () {
             });
 
             const mailResult = await mailResponse.json();
-            console.log(`📤 [CLIENT] 관리자 승인 요청 결과:`, mailResult);
+            console.log(`관리자 승인 요청 결과:`, mailResult);
 
             if (mailResponse.ok) {
               alert('관리자에게 승인 요청이 전송되었습니다.');

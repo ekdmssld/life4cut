@@ -26,16 +26,13 @@ router.post('/admin/sendmail', async (req, res) => {
              <a href="http://localhost:8081/admin/approve?email=${email}">승인하기</a>`,
     };
 
-    console.log('[SERVER] 이메일 전송 시도 중...');
-
     await smtpTransport.sendMail(mailOptions);
-    console.log('[SERVER] 이메일 전송 성공');
 
     res.status(201).json({
       message: '승인 요청이 완료되었습니다. 관리자의 승인을 기다려주세요',
     });
   } catch (error) {
-    console.error(`[SERVER] 이메일 전송 오류 : ${error.message}`);
+    console.error(`이메일 전송 오류 : ${error.message}`);
     res
       .status(500)
       .json({ message: '이메일 전송 중 오류', error: error.message });

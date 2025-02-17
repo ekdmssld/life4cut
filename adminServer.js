@@ -48,19 +48,19 @@ app.get('/profile', adminAuth, (req, res) => {
 });
 // 라우트 설정
 app.get('/main', (req, res) => {
-  res.render('admin_main');
+  res.render('admin_main', { token: null });
 });
 
 app.get('/admin_crud', (req, res) => {
-  res.render('admin_crud');
+  res.render('admin_crud', { token: null });
 });
 
 app.get('/admin_list', (req, res) => {
-  res.render('admin_list');
+  res.render('admin_list', { token: null });
 });
 
 app.get('/admin_statistics', (req, res) => {
-  res.render('admin_statistics');
+  res.render('admin_statistics', { token: null });
 });
 //로그아웃 후 로그인 페이지로 redirection
 app.get('/login', (req, res) => {
