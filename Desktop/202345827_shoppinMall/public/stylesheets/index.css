@@ -1,0 +1,368 @@
+.banner {
+    position: relative;
+    width: 100%;
+    height: 500px; /* 전체 화면 높이에서 헤더 높이 제외 */
+    overflow: hidden;
+    margin-top: 60px;
+    padding: 0;
+    background: none;
+
+}
+
+.banner-video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top;
+    z-index: 1;
+}
+
+.banner-text {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    display: flex;
+    align-items: flex-end;
+    pointer-events: none;
+}
+.banner-text .overlay-text-banner {
+    position: static;
+    margin: 0 0 40px 40px;
+    color: #ffffff;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.6);
+    pointer-events: auto;
+}
+.banner-text .overlay-text-banner h3 {
+    font-size: 1.2rem;
+    margin-bottom: 6px;
+}
+
+.banner-text .overlay-text-banner p {
+    font-size: 0.9rem;
+    line-height: 1.2;
+}
+/* ──────────────────────────────────────────────────────────────────────────── */
+/* 4) 쇼핑하기 버튼                                                         */
+/* ──────────────────────────────────────────────────────────────────────────── */
+.shop-now-btn {
+    display: inline-block;
+    background-color: #10b981;
+    color: #ffffff;
+    padding: 12px 24px;
+    border-radius: 8px;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.shop-now-btn:hover {
+    background-color: #059669;
+}
+
+/* ──────────────────────────────────────────────────────────────────────────── */
+/* 5) 인기 상품 슬라이더                                                    */
+/* ──────────────────────────────────────────────────────────────────────────── */
+/* 컨테이너 */
+#featured-container {
+    width: 100%;
+    max-width: 1000px;
+    margin: 40px auto;
+    overflow: hidden;
+}
+
+/* 한 슬라이드(2개 상품씩) */
+.featured-slide {
+    display: none;
+    justify-content: center;
+    gap: 20px;
+}
+
+.featured-slide.active {
+    display: flex;
+}
+
+/* 상품 카드 */
+.product-card {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    padding: 16px;
+    width: 240px;
+    text-align: center;
+    transition: transform 0.2s;
+}
+
+.product-card:hover {
+    transform: translateY(-4px);
+}
+
+.product-card img {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-bottom: 12px;
+}
+
+.product-card h3 {
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+    color: #111827;
+}
+
+.product-card p {
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+    color: #6b7280;
+}
+
+.product-card strong {
+    display: block;
+    font-size: 1.1rem;
+    margin-bottom: 12px;
+    color: #111827;
+}
+
+.cart-button {
+    background-color: #2563eb;
+    color: #ffffff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.2s;
+}
+
+.cart-button:hover {
+    background-color: #1d4ed8;
+}
+
+/* ──────────────────────────────────────────────────────────────────────────── */
+/* ⑥ Keychron 스타일 추가 섹션 (promo-section)                                   */
+/* ──────────────────────────────────────────────────────────────────────────── */
+/* promo-section 전체 너비 제한 + 세로 간격 설정 */
+.promo-section {
+    width: 100%;
+    max-width: 1200px;
+    margin: 60px auto;
+    padding: 0 20px;
+    display: grid;           /* flex → grid 로 변경 */
+    gap: 40px;
+}
+
+/* ──────────────────────────────────────────────────────────────────────────── */
+/* 6-1) 상단 2×2 레이아웃 (promo-2x2)                                        */
+/* ──────────────────────────────────────────────────────────────────────────── */
+.promo-2x2 {
+    display: grid;
+    grid-template-columns: 2fr 1fr; /* 왼쪽 큰 카드 2 비율, 오른쪽 세로로 작은 카드 1 비율 */
+    grid-template-rows: 1fr 1fr;    /* 두 개의 행을 동일 높이로 */
+    grid-gap: 10px;                 /* 카드들 사이 간격 */
+    width: 100%;
+    height: 600px;                  /* 예시로 높이 지정: 필요에 따라 조정 가능 */
+}
+
+/* 6-1-1) 좌측 큰 카드 */
+.promo-large-card {
+    grid-column: 1 / 2;  /* 1열(왼쪽) */
+    grid-row:    1 / 3;  /* 1행에서 3행 직전까지(즉, 2개 행 전체) */
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.promo-large-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.promo-large-card:hover img {
+    transform: scale(1.05);
+}
+
+/* 오버레이 텍스트 */
+.promo-large-card .overlay-text {
+    position: absolute;
+    bottom: 30px;
+    left: 30px;
+    color: #ffffff;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.6);
+}
+
+.promo-large-card .overlay-text h3 {
+    font-size: 2rem;
+    margin-bottom: 8px;
+}
+
+.promo-large-card .overlay-text p {
+    font-size: 1rem;
+    margin-bottom: 12px;
+}
+
+/* 흰색 버튼 */
+.btn-white {
+    display: inline-block;
+    background-color: #ffffff;
+    color: #111827;
+    padding: 10px 24px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.btn-white:hover {
+    background-color: #f3f4f6;
+}
+
+/* 6-1-2) 우측 상단 작은 카드 */
+.promo-small-card-top {
+    grid-column: 2 / 3; /* 오른쪽 열 */
+    grid-row:    1 / 2; /* 첫 번째 행 */
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.promo-small-card-top img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.promo-small-card-top:hover img {
+    transform: scale(1.05);
+}
+
+/* 작은 카드 오버레이 텍스트 */
+.promo-small-card-top .overlay-text-sm {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    color: #ffffff;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.6);
+}
+
+.promo-small-card-top .overlay-text-sm h4 {
+    font-size: 1.2rem;
+    margin-bottom: 6px;
+}
+
+.promo-small-card-top .overlay-text-sm p {
+    font-size: 0.9rem;
+    line-height: 1.2;
+}
+
+/* 6-1-3) 우측 하단 작은 카드 */
+.promo-small-card-bottom {
+    grid-column: 2 / 3; /* 오른쪽 열 */
+    grid-row:    2 / 3; /* 두 번째 행 */
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.promo-small-card-bottom img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.promo-small-card-bottom:hover img {
+    transform: scale(1.05);
+}
+
+/* 작은 카드 오버레이 텍스트 */
+.promo-small-card-bottom .overlay-text-sm {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    color: #ffffff;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.6);
+}
+
+.promo-small-card-bottom .overlay-text-sm h4 {
+    font-size: 1.2rem;
+    margin-bottom: 6px;
+}
+
+.promo-small-card-bottom .overlay-text-sm p {
+    font-size: 0.9rem;
+    line-height: 1.2;
+}
+
+/* ──────────────────────────────────────────────────────────────────────────── */
+/* 6-2) 하단 3열 카드 레이아웃 (promo-3grid)                                    */
+/* ──────────────────────────────────────────────────────────────────────────── */
+.promo-3grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 20px;
+    width: 100%;
+}
+
+.promo-card-3 {
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: transform 0.2s;
+}
+
+.promo-card-3:hover {
+    transform: translateY(-4px);
+}
+
+.promo-card-3 img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+}
+
+.promo-card-3 h5 {
+    font-size: 1.1rem;
+    margin: 12px 16px 6px;
+    color: #111827;
+}
+
+.promo-card-3 p {
+    font-size: 0.9rem;
+    margin: 0 16px 16px;
+    color: #6b7280;
+}
+
+/* ──────────────────────────────────────────────────────────────────────────── */
+/* 반응형 조정 (간단 예시)                                                    */
+/* ──────────────────────────────────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+    .promo-2x2 {
+        grid-template-columns: 1fr;   /* 작은 화면에서는 1열로 쌓기 */
+        grid-auto-rows: auto;
+        height: auto;                /* 높이를 auto로 바꿔줘야 세로 쌓일 때 왜곡 없음 */
+    }
+    .promo-small-card-top,
+    .promo-small-card-bottom {
+        height: 250px; /* 작은 화면에서 적당한 카드 높이 */
+    }
+}
+
+@media (max-width: 768px) {
+    .promo-3grid {
+        grid-template-columns: 1fr;   /* 한 줄에 카드 1개씩 */
+    }
+}

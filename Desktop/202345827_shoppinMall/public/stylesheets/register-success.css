@@ -1,0 +1,43 @@
+/* public/stylesheets/register-success.css */
+
+/* (1) BODY: 화면 전체를 그라데이션 배경으로 채우고, 콘텐츠를 세로/가로 정중앙에 배치 */
+body {
+    font-family: 'Apple SD Gothic Neo', 'Arial', sans-serif;
+    background: linear-gradient(135deg, #111827 0%, #232946 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+
+/* (2) H2: 흰색 텍스트, 중앙 정렬, 조금 큰 크기 설정 */
+h2 {
+    color: #fff;
+    font-size: 2rem;
+    margin-bottom: 30px;
+    letter-spacing: -1px;
+    text-align: center;
+}
+
+/* (3) 버튼(A 태그): 그라데이션 배경, 그림자, 둥근 모서리, 호버 애니메이션 */
+a.btn-go-auth {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 18px 48px;
+    background: linear-gradient(90deg, #3b82f6 60%, #a5b4fc 100%);
+    color: #232946;
+    text-decoration: none;
+    border-radius: 40px;
+    font-weight: bold;
+    font-size: 1.3rem;
+    box-shadow: 0 8px 64px 16px rgba(59, 130, 246, 0.18);
+    transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
+}
+
+a.btn-go-auth:hover {
+    background: linear-gradient(90deg, #60a5fa 60%, #c7d2fe 100%);
+    box-shadow: 0 12px 96px 24px rgba(59, 130, 246, 0.28);
+    transform: translateY(-2px) scale(1.07);
+}

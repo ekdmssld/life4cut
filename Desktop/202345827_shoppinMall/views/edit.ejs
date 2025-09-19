@@ -1,0 +1,50 @@
+<!-- views/edit.ejs -->
+<!DOCTYPE html>
+<html lang="ko">
+<%- include("header.ejs", {title : "글수정"})%>
+<head>
+    <meta charset="UTF-8">
+    <title><%= post ? '글 수정' : (parentId ? '답글 작성' : '새 글 작성') %></title>
+    <link rel="stylesheet" href="/stylesheets/edit.css">
+</head>
+
+<main class="edit-wrapper">
+    <body>
+    <h2>글 수정</h2>
+    <form action="/board/edit/<%= post.id %>" method="post" enctype="multipart/form-data">
+        <label>제목</label><br>
+        <input type="text" name="title" value="<%= post.title %>" required><br><br>
+
+        <label>내용</label><br>
+        <textarea name="content" rows="8" cols="40" required><%= post.content %></textarea><br><br>
+
+        <!-- (A) 기존 첨부파일이 있으면 표시 -->
+        <% if (files && files.length > 0) { %>
+            <% files.forEach(function(file) { %>
+                <div class="existing-file">
+                    <a href="/uploads/<%= file.filename %>" download><%= file.filename %></a>
+                    <label class="delete-checkbox">
+                        <input type="checkbox" name="deleteFileIds" value="<%= file.id %>">
+                        삭제
+                    </label>
+                </div>
+            <% }) %>
+        <% } %>
+
+        <!-- (B) 새 첨부파일 업로드 -->
+        <label for="attachment">새 첨부파일</label><br>
+        <input
+                type="file"
+                id="attachment"
+                name="attachment"
+                accept="image/*,application/pdf"
+        ><br>
+
+        <button type="submit">저장</button>
+    </form>
+    <br>
+    <a href="/board" class="back-link">← 게시판으로 돌아가기</a>
+</body>
+</main>
+
+</html>

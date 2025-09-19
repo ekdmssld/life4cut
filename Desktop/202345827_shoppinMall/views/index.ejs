@@ -1,0 +1,90 @@
+<%- include('header.ejs', {title : "메인 페이지"}) %>
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/stylesheets/index.css" />
+  </head>
+  <body>
+<!--  배너 섹션 - 동영상 재생-->
+    <section class="banner">
+      <video
+              class="banner-video"
+              src="/images/video.mp4"
+              autoplay
+              muted
+              loop
+              playsinline>
+        <!-- fallback 텍스트: 구형 브라우저가 <video>를 지원하지 않을 경우 표시 -->
+        이 브라우저는 동영상 태그를 지원하지 않습니다.
+      </video>
+      <div class="banner-text">
+        <div class="overlay-text-banner">
+          <h3>키보드, 이제는 삶의 일부</h3>
+          <p>섬세하게 운율된 키보드를 찾을 수 있는 다은컴퍼니와 함께하세요.</p>
+        </div>
+      </div>
+    </section>
+<!--  쇼핑하기 버튼 만들기-->
+    <section style="text-align: center; margin-top: 60px;">
+      <a href="/products" class="shop-now-btn">바로 쇼핑하기 →</a>
+    </section>
+
+<!-- ⑥ Keychron 스타일 추가 섹션                                              -->
+<!--     6-1) 상단: 2×2 레이아웃 (큰 카드 + 작은 카드 2개)                       -->
+<!--     6-2) 하단: 3열 카드 레이아웃                                           -->
+<!-- ──────────────────────────────────────────────────────────────────────────── -->
+<section class="promo-section">
+  <div class="promo-2x2">
+    <!-- 좌측 큰 카드 -->
+    <div class="promo-large-card">
+      <img src="/images/1.jpg" alt="프로모션 대형 이미지" />
+      <div class="overlay-text">
+        <h3>나에게 맞는 키보드는?</h3>
+        <p>당신에게 딱 맞는 키보드를 찾아드립니다.</p>
+        <a href="/guide" class="btn-white">구매 가이드 바로가기</a>
+      </div>
+    </div>
+    <!-- 우측 상단 작은 카드 -->
+    <div class="promo-small-card-top">
+      <img src="/images/2.jpg" alt="작은 카드 이미지 1" />
+      <div class="overlay-text-sm">
+        <h4>Vito ASMR과 키크론의 사운드 테라피</h4>
+        <p>섬세하게 운율된 키보드의 깊은 소리. Vito ASMR과 함께하세요.</p>
+      </div>
+    </div>
+    <!-- 우측 하단 작은 카드 -->
+    <div class="promo-small-card-bottom">
+      <img src="/images/3.jpg" alt="작은 카드 이미지 2" />
+      <div class="overlay-text-sm">
+        <h4>손목은 편하고, 소리는 조용하게.</h4>
+        <p>저소음 스위치로 소리는 줄이고 편안함은 높인 K5 PRO MAX.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6-2) 하단: 3열 카드 레이아웃 -->
+  <div class="promo-3grid">
+    <div class="promo-card-3">
+      <img src="/images/4.jpg" alt="카드 이미지 1" />
+      <h5>키크론X한컴타자, 추억의 산성비!</h5>
+      <p>키크론X한컴타자가 준비한 산성비 게임을 즐겨보세요!</p>
+    </div>
+    <div class="promo-card-3">
+      <img src="/images/5.jpg" alt="카드 이미지 2" />
+      <h5>키크론X교보sam 콜라보 이벤트</h5>
+      <p>교보sam을 구매하시면 만나볼 수 있는 키크론 한정판 컬러!</p>
+    </div>
+    <div class="promo-card-3">
+      <img src="/images/6.jpg" alt="카드 이미지 3" />
+      <h5>퇴근시간 앞당기는 꿀팁</h5>
+      <p>오늘도 야근하셨나요? 전부 알려드립니다!</p>
+    </div>
+  </div>
+</section>
+
+<!-- 외부 JS 불러오기 (슬라이더 & 배너 텍스트 교체) -->
+<script src="/javascripts/main.js"></script>
+<%- include('footer.ejs') %>
+  </body>
+</html>

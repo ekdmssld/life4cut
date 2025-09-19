@@ -1,0 +1,177 @@
+/* public/stylesheets/detail.css */
+
+/* ────────────────────────────────────────────────────────────────────────── */
+/* 1) 전역 스타일 & 배경                                                     */
+/* ────────────────────────────────────────────────────────────────────────── */
+body {
+    background: #f3f4f6;
+    margin: 0;
+    padding: 0;
+    font-family: 'Noto Sans KR', sans-serif;
+    color: #333;
+}
+
+/* ────────────────────────────────────────────────────────────────────────── */
+/* 2) 메인 컨테이너                                                         */
+/* ────────────────────────────────────────────────────────────────────────── */
+main.detail-container {
+    background: #ffffff;
+    max-width: 800px;
+    margin: 80px auto 60px auto;
+    padding: 32px;
+    border-radius: 8px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+}
+
+/* ────────────────────────────────────────────────────────────────────────── */
+/* 3) 제목 블록                                                              */
+/* ────────────────────────────────────────────────────────────────────────── */
+.title-block {
+    background: #e5e7eb;
+    padding: 12px 16px;
+    border-radius: 6px;
+    margin-bottom: 24px;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: #111827;
+}
+
+/* ────────────────────────────────────────────────────────────────────────── */
+/* 4) 메타 정보                                                             */
+/* ────────────────────────────────────────────────────────────────────────── */
+.meta-info {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    font-size: 0.9rem;
+    color: #6b7280;
+    margin-bottom: 24px;
+}
+
+/* ────────────────────────────────────────────────────────────────────────── */
+/* 5) 본문 내용                                                             */
+/* ────────────────────────────────────────────────────────────────────────── */
+.content-body {
+    background: #f9fafb;
+    padding: 20px;
+    border-radius: 4px;
+    line-height: 1.7;
+    margin-bottom: 24px;
+    min-height: 150px;
+}
+
+/* ────────────────────────────────────────────────────────────────────────── */
+/* 6) 첨부파일 목록                                                         */
+/* ────────────────────────────────────────────────────────────────────────── */
+.reply-list {
+    margin-bottom: 32px;
+}
+.reply-list h4 {
+    font-size: 1rem;
+    margin-bottom: 12px;
+    color: #111827;
+}
+.reply-item {
+    padding: 8px 12px;
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 4px;
+    margin-bottom: 8px;
+}
+.reply-item a {
+    color: #2563eb;
+    text-decoration: none;
+}
+.reply-item a:hover {
+    text-decoration: underline;
+}
+
+/* ────────────────────────────────────────────────────────────────────────── */
+/* 7) 액션 버튼                                                             */
+/* ────────────────────────────────────────────────────────────────────────── */
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    margin-top: 16px;
+}
+
+.actions a,
+.actions span.disabled {
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: background 0.2s, color 0.2s;
+}
+
+.actions a {
+    background: #111827;
+    color: #fff;
+}
+
+.actions a:hover {
+    background: #374151;
+}
+
+.actions span.disabled {
+    background: #e5e7eb;
+    color: #9ca3af;
+    cursor: not-allowed;
+}
+
+/* ────────────────────────────────────────────────────────────────────────── */
+/* 8) 반응형                                                                */
+/* ────────────────────────────────────────────────────────────────────────── */
+@media (max-width: 600px) {
+    main.detail-container {
+        margin: 40px 16px;
+        padding: 24px 16px;
+    }
+    .meta-info {
+        flex-direction: column;
+        gap: 8px;
+    }
+    .actions {
+        gap: 8px;
+    }
+}
+.replies-section {
+    margin-top: 40px;
+}
+
+.replies-section h4 {
+    font-size: 1.2rem;
+    margin-bottom: 16px;
+    color: #111827;
+    border-bottom: 2px solid #e5e7eb;
+    padding-bottom: 8px;
+}
+
+.reply-card {
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    padding: 16px;
+    margin-bottom: 12px;
+}
+
+.reply-meta {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    color: #6b7280;
+    margin-bottom: 8px;
+}
+
+.reply-author {
+    font-weight: 600;
+    color: #111827;
+}
+
+.reply-content {
+    line-height: 1.6;
+    color: #333;
+}

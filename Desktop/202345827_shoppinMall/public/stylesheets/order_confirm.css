@@ -1,0 +1,59 @@
+/* public/stylesheets/register-success.css */
+
+/* (1) BODY: 화면 전체를 그라데이션 배경으로 채우고, 콘텐츠를 세로/가로 정중앙에 배치 */
+body {
+    font-family: 'Apple SD Gothic Neo', 'Arial', sans-serif;
+    background: linear-gradient(135deg, #111827 0%, #232946 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+
+/* (2) H2: 흰색 텍스트, 중앙 정렬, 조금 큰 크기 설정 */
+h2 {
+    color: #fff;
+    font-size: 2rem;
+    margin-bottom: 30px;
+    letter-spacing: -1px;
+    text-align: center;
+}
+       /* 주문 확인/에러 메시지 스타일 */
+   .container p {
+       font-size: 1.15rem;
+       color: #fff;
+       text-align: center;
+       margin: 12px 0;
+   }
+
+.container p[style*="color: red"] {
+    color: #ff4d4f !important;
+    background: rgba(255, 77, 79, 0.08);
+    border-radius: 8px;
+    padding: 10px 0;
+    font-weight: bold;
+    letter-spacing: -0.5px;
+}
+
+/* 홈으로 돌아가기 버튼 스타일 */
+a.btn {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 14px 36px;
+    background: linear-gradient(90deg, #4c51bf 60%, #a5b4fc 100%);
+    color: #232946;
+    text-decoration: none;
+    border-radius: 32px;
+    font-weight: bold;
+    font-size: 1.1rem;
+    box-shadow: 0 4px 32px 8px rgba(76, 81, 191, 0.13);
+    transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
+}
+
+a.btn:hover {
+    background: linear-gradient(90deg, #6366f1 60%, #c7d2fe 100%);
+    box-shadow: 0 8px 48px 16px rgba(76, 81, 191, 0.22);
+    transform: translateY(-2px) scale(1.05);
+}

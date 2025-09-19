@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko">
+<%- include('header.ejs', { title: product.name }) %>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/stylesheets/products.css">
+</head>
+<body>
+<section class="product-detail">
+    <div class="product-detail-img">
+        <img
+                src="/images/<%= product.image || 'default.jpg' %>"
+                alt="<%= product.name %>"
+        >
+    </div>
+
+    <div class="product-detail-info">
+        <h2><%= product.emoji %> <%= product.name %></h2>
+        <p><%= product.description %></p>
+        <strong>₩<%= product.price.toLocaleString() %></strong>
+
+        <form action="/cart/add" method="POST" style="display:flex; gap:8px; align-items:center;">
+            <input type="hidden" name="productId" value="<%= product.id %>">
+            <button type="submit" class="cart-button">🛒 장바구니 담기</button>
+        </form>
+
+        <!-- 위시리스트 버튼 -->
+        <button
+                type="button"
+                class="wishlist-button<%= isWishlisted ? ' active' : '' %>"
+                data-product-id="<%= product.id %>"
+                data-authenticated="<%= user ? 'true' : 'false' %>"
+                style="margin-left:8px;"
+        >
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 20 20">
+                <path
+                        class="heart-shape"
+                        d="M10 18s-6.5-4.7-8.3-8.1C-0.2 6.2 2.1 2.5 6 2.5c1.7 0 3.2 1 4 2.5 0.8-1.5 2.3-2.5 4-2.5 3.9 0 6.2 3.7 4.3 7.4C16.5 13.3 10 18 10 18z"
+                        stroke="#e11d48"
+                        stroke-width="1.5"
+                        fill="<%= isWishlisted ? '#e11d48' : 'none' %>"
+                />
+            </svg>
+        </button>
+
+        <p style="margin-top:16px;">
+            <a href="/products">← 목록으로 돌아가기</a>
+        </p>
+    </div>
+</section>
+
+<script src="/javascripts/wishlist.js"></script>
+<%- include('footer.ejs') %>
+</body>
+</html>

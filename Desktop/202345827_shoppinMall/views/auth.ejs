@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- CSS 경로 (public/stylesheets/auth.css) -->
+    <link rel="stylesheet" href="/stylesheets/auth.css" />
+    <%- include('header.ejs', {title:'login'})%>
+</head>
+<body>
+<!-- ──────────────────────────────────────────────────────── -->
+<!-- 로그인/회원가입 컨테이너: 내부에 두 개의 카드가 절반씩 겹침 -->
+<!-- ──────────────────────────────────────────────────────── -->
+<div class="login-page" id="login-page">
+
+    <!-- ─────────────────────────────────────────────────── -->
+    <!-- (A) 로그인 카드: 초기 전면(translateX(0))에 표시       -->
+    <!-- ─────────────────────────────────────────────────── -->
+    <div class="login-content login-content-signin" id="signin-panel">
+        <div class="inner-box">
+            <h2>Log in</h2>
+            <% if (typeof error !== 'undefined' && error && !error.includes('회원가입')) { %>
+                <p class="error-message"><%= error %></p>
+            <% } %>
+            <form class="wrapper-box" action="/auth/login" method="POST">
+                <input
+                        type="text"
+                        name="username"
+                        placeholder="ID"
+                        required
+                />
+                <input
+                        type="password"
+                        name="password"
+                        placeholder="Password"
+                        required
+                />
+                <button type="submit" class="btn-submit">Log in</button>
+            </form>
+
+            <!-- 카드 오른쪽 끝(뒤쪽 카드 일부 보이는 위치)에 'Sign Up' 전환 링크 -->
+            <div class="switcher switcher-to-signup">
+                <p>Don't have an account?</p>
+                <button id="show-signup" class="btn-switch">Sign Up</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ─────────────────────────────────────────────────── -->
+    <!-- (B) 회원가입 카드: 초기 translateX(180px)로 뒤쪽 일부만 보임 -->
+    <!-- ─────────────────────────────────────────────────── -->
+    <div class="login-content login-content-signup" id="signup-panel">
+        <div class="inner-box">
+            <h2>Sign Up</h2>
+            <% if (typeof error !== 'undefined' && error.includes('회원가입')) { %>
+                <p class="error-message"><%= error %></p>
+            <% } %>
+            <form class="wrapper-box" action="/auth/register" method="POST">
+                <input
+                        type="text"
+                        name="username"
+                        placeholder="ID"
+                        required
+                />
+                <input
+                        type="text"
+                        name="name"
+                        placeholder="Name"
+                        required
+                />
+                <input
+                        type="password"
+                        name="password"
+                        placeholder="Password"
+                        required
+                />
+                <button type="submit" class="btn-submit">Sign up</button>
+            </form>
+
+            <!-- 카드 왼쪽 끝(뒤쪽 카드 일부 보이는 위치)에 'Log In' 전환 링크 -->
+            <div class="switcher switcher-to-signin">
+                <p>Have an account?</p>
+                <button id="show-signin" class="btn-switch">Log In</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript 경로 (public/javascripts/auth-slider.js) -->
+<script src="/javascripts/auth-slider.js"></script>
+</body>
+</html>

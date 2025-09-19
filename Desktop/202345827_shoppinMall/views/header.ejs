@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/header.css' />
+</head>
+<body>
+<header class="global-header">
+    <!-- (1) 왼쪽 영역: MyPage 링크 -->
+    <div class="header__left">
+        <a href="/" class="header__link">MyPage</a>
+    </div>
+
+    <!-- (2) 중앙 영역: 네비게이션 링크들 -->
+    <nav class="header__center">
+        <a href="/" class="header__link">홈</a>
+        <a href="/products" class="header__link">상품목록</a>
+        <a href="/cart" class="header__link">장바구니</a>
+        <a href="/board" class="header__link">고객센터</a>
+    </nav>
+
+    <!-- (3) 오른쪽 영역: 로그인/회원가입 또는 사용자 환영/로그아웃 -->
+    <div class="header__right">
+        <% if (!user) { %>
+            <a href="/auth" class="btn-login">로그인</a>
+            <a href="/auth" class="btn-register">회원가입</a>
+        <% } else { %>
+            <span class="welcome-message"><%= user.username %>님 환영합니다!</span>
+            <a href="/auth/logout" class="btn-logout">로그아웃</a>
+        <% } %>
+    </div>
+</header>
+</body>
+</html>

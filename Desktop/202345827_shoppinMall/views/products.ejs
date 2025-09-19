@@ -1,0 +1,75 @@
+<%- include('header.ejs', {title : 'products'})%>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/stylesheets/products.css">
+</head>
+<body>
+<!-- 로그인 상태 표시 -->
+<section class="info-bar custom-info-bar">
+    <% if (user) { %>
+        <p class="center-message"><%= user.name %>님, 환영합니다!</p>
+    <% } else { %>
+        <p class="center-message">🛑 로그인 후 장바구니를 사용할 수 있습니다.</p>
+    <% } %>
+    <div class="product-info-right">
+        현재 등록된 상품 수: <%= allProducts.length %>개
+        <a href="/products/all">전체 목록 보기</a>
+    </div>
+</section>
+
+<!-- ✅ 상품 수 + 전체 목록 보기 -->
+<!--<section class="info-bar-all">-->
+<!--    현재 등록된 상품 수: <%= allProducts.length %>개-->
+<!--    <a href="/products/all">전체 목록 보기</a>-->
+<!--</section>-->
+
+<section>
+    <h2>오늘의 키보드 추천</h2>
+    <div class="product-grid">
+        <% featuredProducts.forEach(product => {
+            // 로그인 여부에 관계없이 wishlistIds 는 빈 배열로 넘어오므로 안전하게 처리
+            const isWishlisted = wishlistIds.includes(product.id);
+        %>
+        <div class="product-card">
+            <a href="/products/<%= product.id %>">
+                <img src="/images/<%= product.image || 'default.jpg' %>"
+                     alt="<%= product.name %>">
+                <h3><%= product.emoji %> <%= product.name %></h3>
+                <p><%= product.description %></p>
+                <strong>₩<%= product.price.toLocaleString() %></strong>
+            </a>
+
+            <form action="/cart/add" method="POST" style="display: flex; gap: 8px; align-items: center;">
+                <input type="hidden" name="productId" value="<%= product.id %>">
+                <button type="submit" class="cart-button">🛒 장바구니 담기</button>
+
+                <button
+                        type="button"
+                        class="wishlist-button<%= isWishlisted ? ' active' : '' %>"
+                        data-product-id="<%= product.id %>"
+                        data-authenticated="<%= user ? 'true' : 'false' %>"
+                >
+            <span class="wishlist-heart" style="display:inline-flex;align-items:center;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 20 20">
+                <path
+                        class="heart-shape"
+                        d="M10 18s-6.5-4.7-8.3-8.1C-0.2 6.2 2.1 2.5 6 2.5c1.7 0 3.2 1 4 2.5 0.8-1.5 2.3-2.5 4-2.5 3.9 0 6.2 3.7 4.3 7.4C16.5 13.3 10 18 10 18z"
+                        stroke="#e11d48"
+                        stroke-width="1.5"
+                        fill="<%= isWishlisted ? '#e11d48' : 'none' %>"
+                />
+              </svg>
+            </span>
+                </button>
+            </form>
+        </div>
+        <% }) %>
+    </div>
+</section>
+
+</body>
+<script src="/javascripts/wishlist.js"></script>
+<%-include('footer.ejs') %>
+</html>

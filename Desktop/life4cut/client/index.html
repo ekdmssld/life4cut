@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>인생네컷 - Life4Cut</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/login.css">
+</head>
+<body>
+<!-- 로그인 화면 -->
+<div class="login-container" id="loginContainer">
+    <div class="login-header">
+        <h1>📸 Life4Cut</h1>
+        <p>인생네컷 포토부스</p>
+    </div>
+    <form class="login-form" id="loginForm">
+        <div class="input-group">
+            <input type="text" id="username" placeholder=" " required>
+            <label for="username">아이디</label>
+        </div>
+        <div class="input-group">
+            <input type="password" id="password" placeholder=" " required>
+            <label for="password">비밀번호</label>
+        </div>
+        <button type="submit" class="login-btn">로그인</button>
+        <div class="error-message" id="errorMessage">
+            아이디 또는 비밀번호가 올바르지 않습니다.
+        </div>
+    </form>
+    <div class="quick-login">
+        <div class="quick-login-btn admin" onclick="app.quickLogin('admin')">
+            🔧 관리자 로그인
+        </div>
+        <div class="quick-login-btn" onclick="app.quickLogin('user')">
+            📸 사용자 로그인
+        </div>
+    </div>
+</div>
+
+<!-- 메인 앱 컨테이너 -->
+<div class="app-container" id="appContainer">
+    <!-- 관리자 패널 -->
+    <div class="admin-panel" id="adminPanel">
+        <div class="admin-header">
+            <h2>🔧 관리자 설정</h2>
+            <button class="logout-btn" onclick="app.logout()">로그아웃</button>
+        </div>
+        <div class="admin-content">
+            <!-- 프레임 업로드 섹션 -->
+            <div class="admin-card">
+                <h3>📷 프레임 관리</h3>
+                <div class="upload-area" onclick="document.getElementById('frameUpload').click()">
+                    <input type="file" id="frameUpload" accept="image/png,image/jpeg" multiple onchange="app.handleFrameUpload(event)">
+                    <div class="upload-icon">📁</div>
+                    <div class="upload-text">
+                        클릭하여 프레임 이미지 업로드<br>
+                        <small>PNG, JPG (최대 5MB)</small>
+                    </div>
+                </div>
+                <div class="frame-preview" id="framePreview"></div>
+            </div>
+
+            <!-- QR 코드 설정 섹션 -->
+            <div class="admin-card qr-settings">
+                <h3>📱 QR 코드 설정</h3>
+                <div class="qr-input-group">
+                    <label for="qrUrl">QR 코드 URL</label>
+                    <input type="url" id="qrUrl" placeholder="https://example.com" value="">
+                </div>
+                <div class="qr-input-group">
+                    <label for="qrText">QR 텍스트 (선택)</label>
+                    <textarea id="qrText" rows="3" placeholder="QR 코드 하단에 표시될 텍스트"></textarea>
+                </div>
+                <div class="qr-input-group">
+                    <label for="googleDriveFolder">Google Drive 폴더 ID</label>
+                    <input type="text" id="googleDriveFolder" placeholder="Google Drive 폴더 ID 입력">
+                    <small>* 폴더 공유 설정을 '링크가 있는 모든 사용자'로 설정하세요</small>
+                </div>
+                <div class="qr-preview">
+                    <div id="qrcode"></div>
+                    <small>* 24시간 후 자동 삭제됩니다</small>
+                </div>
+                <button class="save-settings-btn" onclick="app.saveQRSettings()">설정 저장</button>
+            </div>
+
+            <!-- 장비 상태 체크 -->
+            <div class="admin-card">
+                <h3>🖨️ 장비 상태</h3>
+                <div class="device-status">
+                    <div class="status-item">
+                        <strong>카메라:</strong>
+                        <span id="cameraStatus">⏳ 확인 중...</span>
+                    </div>
+                    <div class="status-item">
+                        <strong>프린터:</strong>
+                        <span id="printerStatus">⏳ 확인 중...</span>
+                    </div>
+                    <div class="status-item">
+                        <strong>저장공간:</strong>
+                        <span id="storageStatus">⏳ 확인 중...</span>
+                    </div>
+                </div>
+                <button class="save-settings-btn" onclick="app.checkDevices()">장비 재확인</button>
+            </div>
+
+            <!-- 통계 -->
+            <div class="admin-card">
+                <h3>📊 오늘의 통계</h3>
+                <div class="stats-content">
+                    <div class="stat-item">
+                        <strong>촬영 횟수:</strong>
+                        <span id="photoCount">0</span>회
+                    </div>
+                    <div class="stat-item">
+                        <strong>인쇄 매수:</strong>
+                        <span id="printCount">0</span>장
+                    </div>
+                    <div class="stat-item">
+                        <strong>평균 소요시간:</strong>
+                        <span id="avgTime">-</span>
+                    </div>
+                </div>
+                <button class="save-settings-btn" onclick="app.resetStats()">통계 초기화</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 사용자 패널 -->
+    <div class="user-panel" id="userPanel">
+        <!-- Step Indicator -->
+        <div class="step-indicator">
+            <div class="step active" data-step="1">1</div>
+            <div class="step" data-step="2">2</div>
+            <div class="step" data-step="3">3</div>
+            <div class="step" data-step="4">4</div>
+        </div>
+
+        <!-- Step 1: 프레임 선택 -->
+        <div id="step1" class="step-content">
+            <h2 class="step-title">프레임을 선택하세요</h2>
+            <div class="frame-selection" id="frameSelection"></div>
+            <button class="next-btn" onclick="photoApp.nextStep()" disabled>다음</button>
+        </div>
+
+        <!-- Step 2: 촬영 모드 -->
+        <div id="step2" class="step-content hidden">
+            <h2 class="step-title">사진 촬영</h2>
+            <div class="camera-container">
+                <video id="video" autoplay playsinline></video>
+                <canvas id="canvas" class="hidden"></canvas>
+                <div class="camera-overlay">
+                    <div class="countdown-overlay" id="countdown"></div>
+                    <div class="photo-counter">
+                        <span id="currentPhoto">1</span> / 4
+                    </div>
+                    <div class="guide-overlay">
+                        <div class="guide-frame"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="camera-controls">
+                <button class="btn secondary" onclick="photoApp.previousStep()">이전</button>
+                <button class="capture-btn" id="captureBtn" onclick="photoApp.startAutoCapture()">
+                    <span class="capture-icon"></span>
+                </button>
+                <button class="btn" id="skipBtn" onclick="photoApp.skipToNext()" disabled>건너뛰기</button>
+            </div>
+            <div class="captured-photos-preview" id="capturedPreview"></div>
+        </div>
+
+        <!-- Step 3: 미리보기 및 편집 -->
+        <div id="step3" class="step-content hidden">
+            <h2 class="step-title">미리보기</h2>
+            <div class="preview-container">
+                <div class="preview-frame" id="previewFrame">
+                    <div class="preview-grid" id="previewGrid"></div>
+                </div>
+            </div>
+            <div class="edit-controls">
+                <button class="btn secondary" onclick="photoApp.retake()">다시 촬영</button>
+                <button class="btn primary" onclick="photoApp.nextStep()">다음</button>
+            </div>
+        </div>
+
+        <!-- Step 4: 인쇄 및 공유 -->
+        <div id="step4" class="step-content hidden">
+            <h2 class="step-title">인쇄 및 공유</h2>
+            <div class="final-preview" id="finalPreview"></div>
+            <div class="share-options">
+                <button class="action-btn print" onclick="photoApp.print()">
+                    🖨️ 인쇄하기
+                </button>
+                <button class="action-btn download" onclick="photoApp.download()">
+                    💾 다운로드
+                </button>
+                <button class="action-btn share" onclick="photoApp.shareViaQR()">
+                    📱 QR 공유
+                </button>
+            </div>
+            <button class="restart-btn" onclick="photoApp.restart()">처음으로</button>
+        </div>
+
+        <!-- 로그아웃 버튼 (사용자 모드) -->
+        <button class="floating-logout" onclick="app.logout()">종료</button>
+    </div>
+</div>
+
+<!-- QR 모달 -->
+<div class="modal" id="qrModal">
+    <div class="modal-content">
+        <span class="close" onclick="photoApp.closeQRModal()">&times;</span>
+        <h3>QR 코드로 사진 받기</h3>
+        <div id="shareQRCode"></div>
+        <p class="qr-info">QR 코드를 스캔하여 사진을 다운로드하세요</p>
+        <p class="qr-warning">* 24시간 후 자동 삭제됩니다</p>
+    </div>
+</div>
+
+<!-- 외부 라이브러리 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+<!-- 앱 스크립트 -->
+<script src="./js/utils.js"></script>
+<script src="./js/components/CaptureMode.js"></script>
+<script src="./js/components/FinalPreview.js"></script>
+<script src="./js/components/FrameSelector.js"></script>
+<script src="./js/components/PeopleSelector.js"></script>
+<script src="./js/components/PhotoSelector.js"></script>
+<script src="./js/components/PringProgress.js"></script>
+<script src="./js/app.js"></script>
+<script src="./sw.js"></script>
+</body>
+</html>

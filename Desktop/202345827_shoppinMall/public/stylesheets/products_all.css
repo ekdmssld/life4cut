@@ -1,0 +1,100 @@
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-top: 20px;
+}
+.product-card {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 10px;
+    text-align: center;
+}
+.product-card img {
+    width: 100%;
+    max-height: 120px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+.cart-button {
+    margin-top: 10px;
+    padding: 5px 10px;
+    background-color: #22c55e;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.cart-button:hover {
+    background-color: #16a34a;
+}
+section{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 60px;
+}
+section h1 p{
+    margin: 0;
+}
+/* ✅ 노란색 돌아가기 링크 스타일 */
+.back-link {
+    position: relative;
+    align-items: center;
+    z-index: 10;
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 6px 18px;
+    border-radius: 20px;
+    background: linear-gradient(90deg, #374151 0%, #6366f1 100%);
+    box-shadow: 0 2px 8px rgba(55, 65, 81, 0.10);
+    transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    border: none;
+    display: inline-block;
+    margin-top: 5px;
+    margin-right: 20px;
+}
+
+/*.back-link:hover {*/
+/*    text-decoration: underline;*/
+/*}*/
+.load-more-btn {
+    display: block;
+    margin: 30px auto 0 auto;
+    width: 180px;
+    margin-bottom: 30px;
+    padding: 8px 0;
+    background-color: #111827;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    text-align: center;
+    justify-content: right;
+    cursor: pointer;
+    font-size: 1rem;
+}
+.load-more-btn:disabled {
+    background: #ddd;
+    color: #aaa;
+    cursor: not-allowed;
+}
+.product-card a{
+    color: #000;
+    text-decoration: none;
+}
+
+.wishlist-button.active .wishlist-heart .heart-shape {
+    fill: #e11d48;
+    stroke: #e11d48;
+}
+.wishlist-heart .heart-shape {
+    transition: fill 0.2s, stroke 0.2s;
+}
+.wishlist-button{
+    /*margin-top: 2px;*/
+    margin-left: 8px;
+    background: none;
+    border: none;
+    vertical-align: middle;
+    display: inline-block;
+}

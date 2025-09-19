@@ -1,0 +1,92 @@
+<%- include('header.ejs', {title:"장바구니"})%>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/stylesheets/cart.css">
+</head>
+<body>
+<!-- ❶ 전체 컨테이너: body를 flex column 컨테이너로 지정 -->
+<div class="page-container">
+    <!-- ❷ 헤더 (Include) -->
+    <%- include('header.ejs', { title: "장바구니" }) %>
+
+    <!-- ❸ 메인 컨텐츠: 화면에서 남는 공간을 모두 차지 -->
+    <main class="content-wrap">
+        <h2>🛒 <%= user.name %>님의 장바구니</h2>
+
+        <% if (cartItems.length === 0) { %>
+            <p>장바구니가 비어 있습니다.</p>
+        <% } else { %>
+            <ul class="cart-list">
+                <% cartItems.forEach(item => { %>
+                    <li class="cart-item">
+              <span class="item-info">
+                <%= item.emoji %> <%= item.name %> – ₩<%= item.price.toLocaleString() %> ×
+              </span>
+                        <div class="item-actions">
+                            <form action="/cart/update" method="POST" class="qty-form">
+                                <input type="hidden" name="productId" value="<%= item.id %>">
+                                <button type="submit" name="action" value="decrease" class="qty-btn">➖</button>
+                                <span class="qty-number"><%= item.quantity %></span>
+                                <button type="submit" name="action" value="increase" class="qty-btn">➕</button>
+                            </form>
+                            <form action="/cart/delete" method="POST" class="del-form">
+                                <input type="hidden" name="productId" value="<%= item.id %>">
+                                <button type="submit" class="delete-button">🗑 삭제</button>
+                            </form>
+                        </div>
+                    </li>
+                <% }) %>
+            </ul>
+        <% } %>
+        <hr>
+        <!-- ➤ 위시리스트 섹션 -->
+        <% if (wishlist && wishlist.length > 0) { %>
+            <section class="wishlist-section">
+                <h3>💖 내 위시리스트</h3>
+                <div class="wishlist-grid">
+                    <% wishlist.forEach(item => { %>
+                        <div class="wishlist-card" data-id="<%= item.id %>">
+                            <img
+                                    src="/images/<%= item.image || 'default.jpg' %>"
+                                    alt="<%= item.name %>"
+                                    class="wishlist-thumb"
+                            />
+                            <div class="wishlist-info">
+                                <h4><%= item.emoji %> <%= item.name %></h4>
+                                <p class="price">₩<%= item.price.toLocaleString() %></p>
+                            </div>
+                            <div class="wishlist-actions">
+                                <form action="/cart/add" method="POST">
+                                    <input type="hidden" name="productId" value="<%= item.id %>" />
+                                    <button type="submit" class="btn btn-cart">🛒 장바구니</button>
+                                </form>
+                                <button type="button" class="btn btn-remove" data-id="<%= item.id %>">
+                                    🗑
+                                </button>
+                            </div>
+                        </div>
+                    <% }) %>
+                </div>
+            </section>
+        <% } else { %>
+            <p class="empty-wishlist">아직 위시리스트가 비어 있습니다.</p>
+        <% } %>
+
+
+        <div class="cart-footer-links">
+            <a href="/products" class="back-link">← 상품 계속 보기</a>
+        </div>
+
+        <form action="/order/confirm" method="POST" class="order-btn-wrapper">
+            <button type="submit" class="order-button">✅ 주문하기</button>
+        </form>
+    </main>
+
+    <!-- ❹ 푸터 (Include) -->
+    <%- include('footer.ejs') %>
+</div>
+<script src="/javascripts/wishlist.js"></script>
+</body>
+</html>

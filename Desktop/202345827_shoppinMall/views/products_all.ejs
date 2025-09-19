@@ -1,0 +1,66 @@
+<%- include('header.ejs', {title: '전체 상품 목록'}) %>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/stylesheets/products_all.css">
+
+</head>
+<body>
+<section>
+    <h1>🧾 전체 상품 목록</h1>
+    <p><a href="/products" class="back-link">오늘의 추천 보러가기</a></p>
+</section>
+
+<main>
+    <div class="product-grid" id="productGrid">
+        <% allProducts.forEach((p, idx) => {
+// p.id가 wishlistIds 배열에 있으면 true
+const isWishlisted = (wishlistIds || []).includes(p.id);
+%>
+            <div class="product-card" style="display: <%= idx < 4 ? 'block' : 'none' %>;">
+                <a href="/products/all/<%= p.id %>">
+                    <img src="/images/<%= p.image || 'default.jpg' %>" alt="<%= p.name %>">
+                    <h3><%= p.emoji %> <%= p.name %>
+                        <% if (p.is_featured === 1) { %>
+                            <span style="color: #facc15; font-size: 0.9em;"><br>⭐ 추천</span>
+                        <% } %>
+                    </h3>
+                    <p><%= p.description %></p>
+                    <strong>₩<%= p.price.toLocaleString() %></strong>
+                </a>
+                <form action="/cart/add" method="POST">
+                    <input type="hidden" name="productId" value="<%= p.id %>">
+                    <button type="submit" class="cart-button">🛒 장바구니 담기</button>
+                    <!-- 수정된 wishlist 버튼 -->
+                    <button
+                            type="button"
+                            class="wishlist-button<%= isWishlisted ? ' active' : '' %>"
+                            data-product-id="<%= p.id %>"
+                            data-authenticated="<%= user ? 'true' : 'false' %>"
+                    >
+              <span class="wishlist-heart" style="display:inline-flex;align-items:center;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 20 20">
+                  <path
+                          class="heart-shape"
+                          d="M10 18s-6.5-4.7-8.3-8.1C-0.2 6.2 2.1 2.5 6 2.5c1.7 0 3.2 1 4 2.5 0.8-1.5 2.3-2.5 4-2.5 3.9 0 6.2 3.7 4.3 7.4C16.5 13.3 10 18 10 18z"
+                          stroke="#e11d48"
+                          stroke-width="1.5"
+                          fill="<%= isWishlisted ? '#e11d48' : 'none' %>"
+                  />
+                </svg>
+              </span>
+                    </button>
+                </form>
+            </div>
+        <% }) %>
+    </div>
+
+    <button class="load-more-btn" id="loadMoreBtn">더보기</button>
+</main>
+
+<%- include('footer.ejs') %>
+</body>
+<script src="/javascripts/products.js"></script>
+<script src="/javascripts/wishlist.js"></script>
+</html>
